@@ -1,0 +1,11 @@
+{
+    "name": "Docker Shell",
+    "description": "Provides a shell environment with access to the Docker CLI.",
+    "version": "1.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/terminal.svg",
+    "tags": [
+        "docker",
+        "shell"
+    ]
+}

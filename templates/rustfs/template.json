@@ -1,0 +1,12 @@
+{
+    "name": "RustFS",
+    "description": "High-performance, distributed object storage system built in Rust",
+    "version": "1.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/rustfs.svg",
+    "tags": [
+        "object-storage",
+        "s3",
+        "storage"
+    ]
+}

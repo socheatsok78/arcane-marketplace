@@ -1,0 +1,12 @@
+{
+    "name": "NetBird",
+    "description": "NetBird is an Open Source Zero Trust Networking platform that allows you to create secure private networks for your organization or home.",
+    "version": "1.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/netbird.svg",
+    "tags": [
+        "infrastructure",
+        "netbird",
+        "networking"
+    ]
+}

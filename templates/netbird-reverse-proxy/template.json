@@ -1,0 +1,12 @@
+{
+    "name": "NetBird Reverse Proxy",
+    "description": "NetBird Reverse Proxy for Arcane",
+    "version": "1.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/netbird.svg",
+    "tags": [
+        "edge",
+        "netbird",
+        "networking"
+    ]
+}

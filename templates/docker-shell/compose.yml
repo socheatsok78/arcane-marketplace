@@ -1,0 +1,14 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/terminal.svg
+
+# !!! DISCLAIMER !!!
+# This service provides a shell environment with access to the Docker CLI.
+# Use with caution as it grants full access to the Docker daemon.
+
+services:
+  shell:
+    image: docker:cli
+    container_name: shell
+    tty: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

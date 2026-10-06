@@ -1,0 +1,11 @@
+{
+    "name": "Zerobyte",
+    "description": "Powerful backup automation for your remote storage, encrypt, compress, and protect your data with ease",
+    "version": "1.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/zerobyte.svg",
+    "tags": [
+        "backup",
+        "storage"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "name": "n8n",
+    "description": "The Platform for AI Agents and Workflow Automation",
+    "version": "0.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/n8n.svg",
+    "tags": [
+        "automation",
+        "workflow",
+        "ai"
+    ]
+}
