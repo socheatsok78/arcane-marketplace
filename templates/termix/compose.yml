@@ -1,0 +1,21 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/termix.svg
+  urls:
+    - https://termix.site/
+    - https://github.com/termix-ssh/termix
+
+services:
+  termix:
+    image: ghcr.io/lukegus/termix:latest
+    container_name: termix
+    restart: unless-stopped
+    ports:
+      - '${COMPOSE_PORT_TERMIX:-2280}:8080'
+    environment:
+      PORT: '8080'
+    volumes:
+      - termix-data:/app/data
+
+volumes:
+  termix-data:
+    driver: local
