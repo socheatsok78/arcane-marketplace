@@ -23,8 +23,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "getarcaneapp";
           repo = "templates";
-          rev = "main";
-          sha256 = "sha256-UE388a4DTD8gXAMD3D5ISAJPAOEIReI7ZjshByvgP54=";
+          rev = "0f0566e93dc158e1c82d545fe72d8f8262c311a5";
+          sha256 = "sha256-eYVny1g+dvIQv4v80/u2MDD3E104P0gu/9gm5+fkm3Q=";
         };
 
         arcane-marketplace = ./.;
