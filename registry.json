@@ -1,10 +1,10 @@
 {
   "$schema": "https://registry.getarcane.app/schema.json",
   "name": "Arcane Marketplace",
-  "description": "A collections of Arcane Templates for Homelab / personal-use.",
+  "description": "A collections of Arcane Templates for Homelab / personal-use",
   "author": "socheatsok78",
   "url": "https://github.com/socheatsok78/docker-marketplace",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "templates": [
     {
       "id": "docker-shell",
@@ -12,11 +12,11 @@
       "description": "Provides a shell environment with access to the Docker CLI.",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/docker-shell/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/docker-shell/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/docker-shell/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/docker-shell",
       "icon_url": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/terminal.svg",
-      "content_hash": "7c0326de0d7bf00166eb0c31aa9eb562ab3838e035d684d8fb0f2ddf38e69856",
+      "content_hash": "7bff84f5de2d5dab0cfdc6e81ac71bf8045e148d391c848b0b1eb4c048f5b014",
       "tags": ["docker", "shell"]
     },
     {
@@ -25,11 +25,11 @@
       "description": "The Platform for AI Agents and Workflow Automation",
       "version": "0.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/n8n/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/n8n/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/n8n/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/n8n",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/n8n.svg",
-      "content_hash": "4a9cb071edbc3094a2834b991c915d0699ef1b88aa75958fd99c2a520dc54590",
+      "content_hash": "f2fe757a9a92b37d9f1503714bdf4c50d3780e1b1cd1ae23e3e30800ac54f525",
       "tags": ["automation", "workflow", "ai"]
     },
     {
@@ -38,11 +38,11 @@
       "description": "NetBird is an Open Source Zero Trust Networking platform that allows you to create secure private networks for your organization or home.",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/netbird",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/netbird.svg",
-      "content_hash": "11d00d8dfbe1399fa96d37c59d89fa941160e77574c52397dee89955d0484495",
+      "content_hash": "3b8e4c85e3939e3a2b582ebf54deacb67c1fd11b62e132a20e31c371b175c49d",
       "tags": ["infrastructure", "netbird", "networking"]
     },
     {
@@ -51,11 +51,11 @@
       "description": "NetBird Client for Arcane",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird-client/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird-client/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird-client/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/netbird-client",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/netbird.svg",
-      "content_hash": "42a7f9b90933c7c34273b89d6867cbd13c76ab714aa0d3569c2e40cf8c511d40",
+      "content_hash": "fd4930257ae80448ab90db38e5bafc9f12d70e0c81c8170b5fdacc93bdc42123",
       "tags": ["edge", "netbird", "networking"]
     },
     {
@@ -64,11 +64,11 @@
       "description": "NetBird Reverse Proxy for Arcane",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird-reverse-proxy/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird-reverse-proxy/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/netbird-reverse-proxy/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/netbird-reverse-proxy",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/netbird.svg",
-      "content_hash": "46c94dce78cfcd003327714533ab7a2a4f1036fad7a9e85c8182ae62134736fb",
+      "content_hash": "a788768d479298b7c0d181d5489a7cf874fbc3c8e3b409cc8345f344caad25d8",
       "tags": ["edge", "netbird", "networking"]
     },
     {
@@ -77,11 +77,11 @@
       "description": "Pangolin Site for Arcane",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/pangolin-site/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/pangolin-site/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/pangolin-site/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/pangolin-site",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/pangolin.svg",
-      "content_hash": "718582062b52b1668e4c47f14ef0dac957d5421a66b3aa2b30c20c0d4a664ece",
+      "content_hash": "1962d86cb69242fd0c908ca4b1e55edb5025c62b41cc92fb2ad73226b7d9b251",
       "tags": ["edge", "pangolin", "networking"]
     },
     {
@@ -90,11 +90,11 @@
       "description": "High-performance, distributed object storage system built in Rust",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/rustfs/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/rustfs/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/rustfs/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/rustfs",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/rustfs.svg",
-      "content_hash": "459212a12f6b152706bd6811d51f0154a1f71fcc2bdf5cc24b715442f73d5d15",
+      "content_hash": "749fc00100d8decc53c4d49eb654d38788fd4e882b72a6b9c2e3fe9fd85f3f1a",
       "tags": ["object-storage", "s3", "storage"]
     },
     {
@@ -103,11 +103,11 @@
       "description": "Self host a DNS server for privacy & security",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/technitium-dns/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/technitium-dns/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/technitium-dns/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/technitium-dns",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/technitium.svg",
-      "content_hash": "27637b60b9c9b03f8220e189494875e08419e652304a8aa8a979725f806ff41d",
+      "content_hash": "c58bfbe955f86c964f6e7bc15084cefd4e0752aece87f77addf891263b330bf0",
       "tags": ["dns", "networking"]
     },
     {
@@ -116,11 +116,11 @@
       "description": "Self-hosted server management, from SSH and remote desktop to automations",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/termix/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/termix/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/termix/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/termix",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/termix.svg",
-      "content_hash": "c087b72bc492becca660e1e1e38a501153422a560831f60596794177b4c16104",
+      "content_hash": "4baf69bd8ea12c92c8219e3cacf7aaac80c4fab59ea86582628b6437ecb8c47d",
       "tags": ["management", "ssh"]
     },
     {
@@ -129,11 +129,11 @@
       "description": "Self-hosted server management, from SSH and remote desktop to automations",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/termix-guacd/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/termix-guacd/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/termix-guacd/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/termix-guacd",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/termix.svg",
-      "content_hash": "8ef3d61a4da34969275460c67173f00ccd7edaa7af18294ec28c03c12b12b13f",
+      "content_hash": "9508c0b45f97931996d7f43c2b3ec1916806df8da13ef9cfc6e211ce2913de83",
       "tags": ["management", "ssh"]
     },
     {
@@ -142,11 +142,11 @@
       "description": "A simple wake on lan web app written with SvelteKit, Go and PocketBase",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/upsnap/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/upsnap/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/upsnap/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/upsnap",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/upsnap.svg",
-      "content_hash": "cd5b142d41561c4bb2a37f2e5c050999e1ddd025ec4d8336dd06cd27d3283780",
+      "content_hash": "d16c7322195bf36c328ed36476fe57553d03ae45c5edad47264d1b5bc3b9e700",
       "tags": ["networking", "utility"]
     },
     {
@@ -155,11 +155,11 @@
       "description": "Powerful backup automation for your remote storage, encrypt, compress, and protect your data with ease",
       "version": "1.0.0",
       "author": "socheatsok78",
-      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/zerobyte/compose.yml",
+      "compose_url": "https://socheatsok78.github.io/arcane-marketplace/templates/zerobyte/compose.yaml",
       "env_url": "https://socheatsok78.github.io/arcane-marketplace/templates/zerobyte/.env.example",
       "documentation_url": "https://github.com/socheatsok78/docker-marketplace/tree/main/templates/zerobyte",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/zerobyte.svg",
-      "content_hash": "c9f2fe667bbbfec9d1b90b70685a4cb15aa3f1e6f8e3156e36b76cf732365c1c",
+      "content_hash": "2b2395351919dead990dc6ae4980e33a43bcc1e2ce40165b9776851d1e48e8d4",
       "tags": ["backup", "storage"]
     }
   ]

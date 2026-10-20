@@ -1,0 +1,38 @@
+diff --git a/site/src/routes/+page.svelte b/site/src/routes/+page.svelte
+index 649cb23..2a19d97 100644
+--- a/site/src/routes/+page.svelte
++++ b/site/src/routes/+page.svelte
+@@ -10,13 +10,13 @@
+ 
+   let { data }: PageProps = $props();
+ 
+-  let registryUrl = $state("https://registry.getarcane.app/registry.json");
++  let registryUrl = $state("https://arcane-marketplace.socheat.dev/registry.json");
+   let query = $state("");
+   let activeTag = $state<string | null>(null);
+ 
+   // Prerendered pages can't read the query string at build time, so restore it in the browser.
+   onMount(() => {
+-    registryUrl = `${location.origin}/registry.json`;
++    registryUrl = `${location.href}registry.json`;
+     const params = new URLSearchParams(location.search);
+     query = params.get("q") ?? "";
+     activeTag = params.get("tag");
+@@ -71,7 +71,7 @@
+ </script>
+ 
+ <svelte:head>
+-  <title>Arcane Templates Registry</title>
++  <title>Arcane Marketplace</title>
+   <meta
+     name="description"
+     content="Browse {data.templates
+@@ -80,7 +80,7 @@
+ </svelte:head>
+ 
+ <section class="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
+-  <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">Arcane Templates Registry</h1>
++  <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">Arcane Marketplace</h1>
+   <p class="max-w-xl text-muted-foreground">
+     Community Docker Compose templates, ready to deploy from Arcane. Add the registry URL in
+     Arcane's template settings to browse them in the app.

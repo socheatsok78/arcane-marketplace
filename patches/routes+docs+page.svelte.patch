@@ -1,0 +1,31 @@
+diff --git a/site/src/routes/docs/+page.svelte b/site/src/routes/docs/+page.svelte
+index 979fc8b..a31659c 100644
+--- a/site/src/routes/docs/+page.svelte
++++ b/site/src/routes/docs/+page.svelte
+@@ -34,7 +34,7 @@
+       the
+       <a
+         class="text-primary hover:underline"
+-        href="https://github.com/getarcaneapp/templates"
++        href="https://github.com/socheatsok78/arcane-marketplace"
+         target="_blank"
+         rel="noopener">GitHub repository</a
+       >. On every merge to <code class="font-mono text-foreground">main</code>, CI generates
+@@ -51,7 +51,7 @@
+       <li>Open <strong class="text-foreground">Settings → Templates</strong> in Arcane.</li>
+       <li>
+         Add <code class="font-mono text-foreground"
+-          >https://registry.getarcane.app/registry.json</code
++          >https://arcane-marketplace.socheat.dev/registry.json</code
+         > as a registry.
+       </li>
+       <li>Pick a template, fill in its environment values, and deploy.</li>
+@@ -99,7 +99,7 @@ vp run lint:templates my-app  # check it, add --fix for automatic fixes</pre>
+     <p class="mt-3 text-sm text-muted-foreground">
+       See <a
+         class="text-primary hover:underline"
+-        href="https://github.com/getarcaneapp/templates/blob/main/CONTRIBUTING.md"
++        href="https://github.com/socheatsok78/arcane-marketplace/blob/main/CONTRIBUTING.md"
+         target="_blank"
+         rel="noopener">CONTRIBUTING.md</a
+       > for the full checklist.

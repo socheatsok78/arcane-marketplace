@@ -1,0 +1,13 @@
+diff --git a/site/src/routes/+layout.svelte b/site/src/routes/+layout.svelte
+index 301c856..ea39597 100644
+--- a/site/src/routes/+layout.svelte
++++ b/site/src/routes/+layout.svelte
+@@ -45,7 +45,7 @@
+   >.
+   <a
+     class="ml-2 text-foreground hover:text-primary"
+-    href="https://github.com/getarcaneapp/templates/blob/main/CONTRIBUTING.md"
++    href="https://github.com/socheatsok78/arcane-marketplace/blob/main/CONTRIBUTING.md"
+     target="_blank"
+     rel="noopener">Contribute a template</a
+   >

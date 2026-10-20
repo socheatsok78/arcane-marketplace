@@ -15,16 +15,16 @@
         version = "0.1.0-unstable";
 
         REGISTRY_NAME = "Arcane Marketplace";
-        REGISTRY_DESCRIPTION = "A collections of Arcane Templates for Homelab / personal-use.";
+        REGISTRY_DESCRIPTION = "A collections of Arcane Templates for Homelab / personal-use";
         REGISTRY_AUTHOR = "socheatsok78";
         REGISTRY_URL = "https://github.com/socheatsok78/docker-marketplace";
-        PUBLIC_BASE = "https://socheatsok78.github.io/arcane-marketplace/templates";
+        PUBLIC_BASE = "https://arcane-marketplace.socheat.dev/templates";
 
         src = pkgs.fetchFromGitHub {
           owner = "getarcaneapp";
           repo = "templates";
-          rev = "0f0566e93dc158e1c82d545fe72d8f8262c311a5";
-          sha256 = "sha256-eYVny1g+dvIQv4v80/u2MDD3E104P0gu/9gm5+fkm3Q=";
+          rev = "main";
+          sha256 = "sha256-ua1ey/dMqz6F3Kh3w70yA8AqfyOxjnv1QxbRZm0DET0=";
         };
 
         arcane-marketplace = ./.;
@@ -39,8 +39,16 @@
           inherit (finalAttrs) pname version src;
           inherit (pkgs) pnpm;
           fetcherVersion = 4;
-          hash = "sha256-2udID2AohfXnLjQVS9sHpfv+pcDNEf1NDtTRLf2OvU0=";
+          hash = "sha256-/ig19izsGa6W527vrvEqIcaGparaVf6Jc0Y+5+fNiYI=";
         };
+
+        patches = [
+          patches/app.html.patch
+          patches/lib+components+SiteHeader.svelte.patch
+          patches/routes+docs+page.svelte.patch
+          patches/routes+layout.svelte.patch
+          patches/routes+page.svelte.patch
+        ];
 
         configurePhase = ''
           runHook preConfigure
@@ -56,12 +64,7 @@
           fi
 
           # Create a symlink to the templates directory
-          ln -s "${finalAttrs.arcane-marketplace}/templates" ./templates
-
-          # Patching public/index.html
-          sed -i 's|Arcane Templates Registry|${finalAttrs.REGISTRY_NAME}|g' public/index.html
-          sed -i 's|Community Docker Compose catalog|${finalAttrs.REGISTRY_DESCRIPTION}|g' public/index.html
-          sed -i 's|{location.origin}/registry.json|{location.href}registry.json|g' public/index.html
+          cp -R "${finalAttrs.arcane-marketplace}/templates/." ./templates
 
           runHook postConfigure
         '';
@@ -70,10 +73,10 @@
           runHook preBuild
 
           pnpm run generate
+          pnpm run stage
 
           mkdir -p $out
-          cp public/index.html $out/index.html
-          cp registry.json $out/registry.json
+          cp -R build/. $out/
 
           runHook postBuild
         '';

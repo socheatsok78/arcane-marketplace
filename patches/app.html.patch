@@ -1,0 +1,13 @@
+diff --git a/site/src/app.html b/site/src/app.html
+index c476515..88d82ff 100644
+--- a/site/src/app.html
++++ b/site/src/app.html
+@@ -4,7 +4,7 @@
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <meta name="theme-color" content="#030305" />
+-    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
++    <link rel="icon" href="https://avatars.githubusercontent.com/u/4363857" type="image/svg+xml" />
+     %sveltekit.head%
+   </head>
+   <body data-sveltekit-preload-data="hover">

@@ -1,0 +1,22 @@
+diff --git a/site/src/lib/components/SiteHeader.svelte b/site/src/lib/components/SiteHeader.svelte
+index cd8049c..4c05b81 100644
+--- a/site/src/lib/components/SiteHeader.svelte
++++ b/site/src/lib/components/SiteHeader.svelte
+@@ -17,7 +17,7 @@
+ >
+   <nav class="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:gap-6 sm:px-6">
+     <a href="/" class="flex items-center gap-2 font-semibold">
+-      <img src="/logo.svg" alt="" width="22" height="22" />
++      <img src="https://avatars.githubusercontent.com/u/4363857" alt="" width="22" height="22" />
+       <span>Arcane <span class="hidden text-muted-foreground sm:inline">Templates</span></span>
+     </a>
+     <div class="flex items-center gap-1 text-sm">
+@@ -31,7 +31,7 @@
+       {/each}
+     </div>
+     <a
+-      href="https://github.com/getarcaneapp/templates"
++      href="https://github.com/socheatsok78/arcane-marketplace"
+       class="ml-auto text-sm text-muted-foreground transition hover:text-foreground"
+       target="_blank"
+       rel="noopener">GitHub</a
