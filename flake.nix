@@ -17,7 +17,7 @@
         REGISTRY_NAME = "Arcane Marketplace";
         REGISTRY_DESCRIPTION = "A collections of Arcane Templates for Homelab / personal-use";
         REGISTRY_AUTHOR = "socheatsok78";
-        REGISTRY_URL = "https://github.com/socheatsok78/docker-marketplace";
+        REGISTRY_URL = "https://github.com/socheatsok78/arcane-marketplace";
         PUBLIC_BASE = "https://arcane-marketplace.socheat.dev/templates";
 
         src = pkgs.fetchFromGitHub {
