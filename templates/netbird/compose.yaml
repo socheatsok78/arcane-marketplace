@@ -1,0 +1,321 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/netbird.svg
+  urls:
+    - https://netbird.io/
+    - https://github.com/netbirdio/netbird
+
+x-traefik: &traefik
+  image: traefik:v3.6
+
+x-dashboard: &dashboard
+  image: netbirdio/dashboard:latest
+
+x-netbird-server: &netbird-server
+  image: netbirdio/netbird-server:latest
+
+x-provisioner: &provisioner
+  image: ghcr.io/socheatsok78/netbirdio-provisioner:latest
+
+x-proxy: &proxy
+  # Use custom reverse proxy image for Auto-Provisioning with socheatsok78/netbirdio-provisioner
+  # image: netbirdio/reverse-proxy:latest
+  image: ghcr.io/socheatsok78/netbirdio-reverse-proxy:latest
+
+x-crowdsec: &crowdsec
+  image: crowdsecurity/crowdsec:v1.7.7
+
+services:
+  # Traefik reverse proxy (automatic TLS via Let's Encrypt)
+  traefik:
+    <<: *traefik
+    container_name: netbird-traefik
+    restart: unless-stopped
+    networks:
+      netbird:
+        ipv4_address: 172.30.0.10
+    command:
+      # Logging
+      - "--log.level=INFO"
+      - "--accesslog=true"
+      # Docker provider
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=netbird"
+      # Entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.allowACMEByPass=true"
+      # Disable timeouts for long-lived gRPC streams
+      - "--entrypoints.websecure.transport.respondingTimeouts.readTimeout=0"
+      - "--entrypoints.websecure.transport.respondingTimeouts.writeTimeout=0"
+      - "--entrypoints.websecure.transport.respondingTimeouts.idleTimeout=0"
+      # HTTP to HTTPS redirect
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      # Let's Encrypt ACME
+      - "--certificatesresolvers.letsencrypt.acme.email=${NB_TRAEFIK_ACME_EMAIL:?required}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      # gRPC transport settings
+      - "--serverstransport.forwardingtimeouts.responseheadertimeout=0s"
+      - "--serverstransport.forwardingtimeouts.idleconntimeout=0s"
+      - "--providers.file.filename=/etc/traefik/dynamic.yaml"
+    ports:
+      - '443:443/tcp'
+      - '443:443/udp'
+      - '80:80'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - netbird_traefik_letsencrypt:/letsencrypt
+    configs:
+      - source: traefik_config
+        target: /etc/traefik/dynamic.yaml
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"
+
+  # UI dashboard
+  dashboard:
+    <<: *dashboard
+    container_name: netbird-dashboard
+    restart: unless-stopped
+    networks: [netbird]
+    environment:
+      # Endpoints
+      NETBIRD_MGMT_API_ENDPOINT: https://${NB_PROXY_DOMAIN:?required}
+      NETBIRD_MGMT_GRPC_API_ENDPOINT: https://${NB_PROXY_DOMAIN:?required}
+      # OIDC - using embedded IdP
+      AUTH_AUDIENCE: netbird-dashboard
+      AUTH_CLIENT_ID: netbird-dashboard
+      AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET:-}
+      AUTH_AUTHORITY: https://${NB_PROXY_DOMAIN:?required}/oauth2
+      USE_AUTH0: false
+      AUTH_SUPPORTED_SCOPES: openid profile email groups
+      AUTH_REDIRECT_URI: /nb-auth
+      AUTH_SILENT_REDIRECT_URI: /nb-silent-auth
+      # SSL
+      NGINX_SSL_PORT: 443
+      # Letsencrypt
+      LETSENCRYPT_DOMAIN: none
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.netbird-dashboard.rule=Host(`${NB_PROXY_DOMAIN:?required}`)
+      - traefik.http.routers.netbird-dashboard.entrypoints=websecure
+      - traefik.http.routers.netbird-dashboard.tls=true
+      - traefik.http.routers.netbird-dashboard.tls.certresolver=letsencrypt
+      - traefik.http.routers.netbird-dashboard.service=dashboard
+      - traefik.http.routers.netbird-dashboard.priority=1
+      - traefik.http.services.dashboard.loadbalancer.server.port=80
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"
+
+  # Combined server (Management + Signal + Relay + STUN)
+  netbird-server:
+    <<: *netbird-server
+    container_name: netbird-server
+    restart: unless-stopped
+    networks: [netbird]
+    ports:
+      - '3478:3478/udp'
+    volumes:
+      - netbird_data:/var/lib/netbird
+    configs:
+      - source: netbird_config
+        target: /etc/netbird/config.yaml
+    command: ["--config", "/etc/netbird/config.yaml"]
+    labels:
+      - traefik.enable=true
+      # gRPC router (needs h2c backend for HTTP/2 cleartext)
+      - traefik.http.routers.netbird-grpc.rule=Host(`${NB_PROXY_DOMAIN:?required}`) && (PathPrefix(`/signalexchange.SignalExchange/`) || PathPrefix(`/management.ManagementService/`) || PathPrefix(`/management.ProxyService/`))
+      - traefik.http.routers.netbird-grpc.entrypoints=websecure
+      - traefik.http.routers.netbird-grpc.tls=true
+      - traefik.http.routers.netbird-grpc.tls.certresolver=letsencrypt
+      - traefik.http.routers.netbird-grpc.service=netbird-server-h2c
+      - traefik.http.routers.netbird-grpc.priority=100
+      # Backend router (relay, WebSocket, API, OAuth2)
+      - traefik.http.routers.netbird-backend.rule=Host(`${NB_PROXY_DOMAIN:?required}`) && (PathPrefix(`/relay`) || PathPrefix(`/ws-proxy/`) || PathPrefix(`/api`) || PathPrefix(`/oauth2`))
+      - traefik.http.routers.netbird-backend.entrypoints=websecure
+      - traefik.http.routers.netbird-backend.tls=true
+      - traefik.http.routers.netbird-backend.tls.certresolver=letsencrypt
+      - traefik.http.routers.netbird-backend.service=netbird-server
+      - traefik.http.routers.netbird-backend.priority=100
+      # Services
+      - traefik.http.services.netbird-server.loadbalancer.server.port=80
+      - traefik.http.services.netbird-server-h2c.loadbalancer.server.port=80
+      - traefik.http.services.netbird-server-h2c.loadbalancer.server.scheme=h2c
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"
+
+  # NetBird Provisioner - manages proxy registration and configuration
+  provisioner:
+    <<: *provisioner
+    container_name: netbird-provisioner
+    restart: no
+    environment:
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}
+      NB_PROXY_CROWDSEC_API_URL: http://crowdsec:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - provisioning-configs:/provisioning-configs
+    depends_on:
+      netbird-server:
+        condition: service_started
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+  # NetBird Proxy - exposes internal resources to the internet
+  proxy:
+    <<: *proxy
+    container_name: netbird-proxy
+    ports:
+    - 51820:51820/udp
+    restart: unless-stopped
+    networks: [netbird]
+    depends_on:
+      netbird-server:
+        condition: service_started
+      crowdsec:
+        condition: service_healthy
+      provisioner:
+        condition: service_completed_successfully
+    environment:
+      # NetBird Proxy Configuration
+      NB_PROXY_DEBUG_LOGS: ${NB_PROXY_DEBUG_LOGS:-false}
+      # Use internal Docker network to connect to management (avoids hairpin NAT issues)
+      NB_PROXY_MANAGEMENT_ADDRESS: http://netbird-server:80
+      # Allow insecure gRPC connection to management (required for internal Docker network)
+      NB_PROXY_ALLOW_INSECURE: true
+      # Public URL where this proxy is reachable (used for cluster registration)
+      NB_PROXY_DOMAIN: ${NB_PROXY_DOMAIN:?required}
+      NB_PROXY_ADDRESS: :8443
+      # NB_PROXY_TOKEN: <will be set by socheatsok78/netbirdio-provisioner service>
+      NB_PROXY_CERTIFICATE_DIRECTORY: /certs
+      NB_PROXY_ACME_CERTIFICATES: true
+      NB_PROXY_ACME_CHALLENGE_TYPE: tls-alpn-01
+      NB_PROXY_FORWARDED_PROTO: https
+      # Enable NetBird-Only Access
+      NB_PROXY_PRIVATE: true
+      # Enable PROXY protocol to preserve client IPs through L4 proxies (Traefik TCP passthrough)
+      NB_PROXY_PROXY_PROTOCOL: true
+      # Trust Traefik's IP for PROXY protocol headers
+      NB_PROXY_TRUSTED_PROXIES: 172.30.0.10
+      NB_PROXY_CROWDSEC_API_URL: http://crowdsec:8080
+      # NB_PROXY_CROWDSEC_API_KEY: <will be set by socheatsok78/netbirdio-provisioner service>
+
+    volumes:
+      - netbird_proxy_certs:/certs
+      - provisioning-configs:/provisioning-configs:ro
+
+    # NetBird-Only Access failed because connections back to the host's public IP time out due to Hairpin NAT / Loopback blocking.
+    # https://github.com/netbirdio/netbird/issues/5404#issuecomment-5239752571
+    extra_hosts:
+      - "${NB_PROXY_DOMAIN:?required}:172.30.0.10"
+
+    labels:
+      # TCP passthrough for any unmatched domain (proxy handles its own TLS)
+      - traefik.enable=true
+      - traefik.tcp.routers.proxy-passthrough.entrypoints=websecure
+      - traefik.tcp.routers.proxy-passthrough.rule=HostSNI(`*`)
+      - traefik.tcp.routers.proxy-passthrough.tls.passthrough=true
+      - traefik.tcp.routers.proxy-passthrough.service=proxy-tls
+      - traefik.tcp.routers.proxy-passthrough.priority=1
+      - traefik.tcp.services.proxy-tls.loadbalancer.server.port=8443
+      - traefik.tcp.services.proxy-tls.loadbalancer.serverstransport=pp-v2@file
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"
+
+  crowdsec:
+    <<: *crowdsec
+    container_name: netbird-crowdsec
+    restart: unless-stopped
+    networks: [netbird]
+    environment:
+      COLLECTIONS: crowdsecurity/linux
+    volumes:
+      - crowdsec:/etc/crowdsec
+      - crowdsec_db:/var/lib/crowdsec/data
+    healthcheck:
+      test: [CMD, cscli, lapi, status]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+    labels:
+      - traefik.enable=false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"
+
+volumes:
+  netbird_data:
+  netbird_traefik_letsencrypt:
+  netbird_proxy_certs:
+  crowdsec:
+  crowdsec_db:
+  provisioning-configs:
+
+networks:
+  netbird:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+          gateway: 172.30.0.1
+
+configs:
+  # Traefik TCP configuration for proxy protocol v2
+  traefik_config:
+    content: |
+      tcp:
+        serversTransports:
+          pp-v2:
+            proxyProtocol:
+              version: 2
+
+  # Combined NetBird Server Configuration (Simplified)
+  netbird_config:
+    content: |
+      server:
+        listenAddress: ":80"
+        exposedAddress: "https://${NB_PROXY_DOMAIN:?required}:443"
+        stunPorts:
+          - 3478
+        metricsPort: 9090
+        healthcheckAddress: ":9000"
+        logLevel: "info"
+        logFile: "console"
+        authSecret: "${NB_AUTH_SECRET:?required}"
+        dataDir: "/var/lib/netbird"
+        auth:
+          issuer: "https://${NB_PROXY_DOMAIN:?required}/oauth2"
+          signKeyRefreshEnabled: true
+          sessionCookieEncryptionKey: "${NB_SESSION_ENCRYPTION_KEY:?required}"
+          dashboardRedirectURIs:
+            - "https://${NB_PROXY_DOMAIN:?required}/nb-auth"
+            - "https://${NB_PROXY_DOMAIN:?required}/nb-silent-auth"
+          cliRedirectURIs:
+            - "http://localhost:53000/"
+        reverseProxy:
+          trustedHTTPProxies:
+            - "172.30.0.10/32"
+          trustedPeers:
+            - "172.30.0.10/32"
+        store:
+          engine: "sqlite"
+          encryptionKey: "${NB_STORE_ENCRYPTION_KEY:?required}"
