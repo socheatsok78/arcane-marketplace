@@ -4,7 +4,7 @@
   "description": "A collections of Arcane Templates for Homelab / personal-use",
   "author": "socheatsok78",
   "url": "https://github.com/socheatsok78/docker-marketplace",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "templates": [
     {
       "id": "docker-shell",
@@ -28,8 +28,8 @@
       "compose_url": "https://arcane-marketplace.socheat.dev/templates/iperf3/compose.yaml",
       "env_url": "https://arcane-marketplace.socheat.dev/templates/iperf3/.env.example",
       "documentation_url": "https://github.com/socheatsok78/arcane-marketplace/tree/main/templates/iperf3",
-      "icon_url": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/terminal.svg",
-      "content_hash": "9b9973ed4f543880061cfb228891b683b1ab5d727178f3069a64494350ed5296",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons/png/myspeed.png",
+      "content_hash": "7bf6f8ef1d310164bc7c6ae26d3e1dddad0f3bd769b51ef2687ecf18505a20b8",
       "tags": ["networking", "tools"]
     },
     {

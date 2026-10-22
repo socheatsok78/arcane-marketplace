@@ -3,7 +3,7 @@
     "description": "IPerf3 Docker Build for Network Performance and Bandwidth Testing",
     "version": "0.0.0",
     "author": "socheatsok78",
-    "icon_url": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/terminal.svg",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons/png/myspeed.png",
     "tags": [
         "networking",
         "tools"
