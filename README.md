@@ -13,6 +13,7 @@ https://getarcane.app/
 | Name | Description |
 | ---- | ----------- |
 | Docker Shell | Provides a shell environment with access to the Docker CLI. |
+| IPerf3 | IPerf3 Docker Build for Network Performance and Bandwidth Testing |
 | n8n | The Platform for AI Agents and Workflow Automation |
 | NetBird | NetBird is an Open Source Zero Trust Networking platform that allows you to create secure private networks for your organization or home. |
 | NetBird Client | NetBird Client for Arcane |
