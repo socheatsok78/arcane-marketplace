@@ -4,7 +4,7 @@
   "description": "A collections of Arcane Templates for Homelab / personal-use",
   "author": "socheatsok78",
   "url": "https://github.com/socheatsok78/docker-marketplace",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "templates": [
     {
       "id": "docker-shell",
@@ -55,7 +55,7 @@
       "env_url": "https://arcane-marketplace.socheat.dev/templates/netbird/.env.example",
       "documentation_url": "https://github.com/socheatsok78/arcane-marketplace/tree/main/templates/netbird",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/netbird.svg",
-      "content_hash": "d67c9ce14e119614d1f6cf2c15a8a302eb985bbc32aa0ac11c164ef4d205ff94",
+      "content_hash": "8dbde0930e109cdef0adc1c90d6445c7849cf5c3de087456f8c456a1f920829b",
       "tags": ["infrastructure", "netbird", "networking"]
     },
     {
