@@ -118,39 +118,6 @@ services:
         max-size: "500m"
         max-file: "2"
 
-  # NetBird Provisioner - manages proxy registration and configuration
-  provisioner:
-    <<: *netbirdio-provisioner
-    container_name: netbird-provisioner
-    restart: no
-    environment:
-      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}
-      NB_PROXY_CROWDSEC_API_URL: http://crowdsec:8080
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - provisioning-configs:/provisioning-configs
-    depends_on:
-      netbird-server:
-        condition: service_started
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "2"
-
-  # Prune Proxy Peers - cleans up unused proxy peers from the network
-  prune-proxy-peers:
-    <<: *netbirdio-prune-proxy-peers
-    container_name: netbird-prune-proxy-peers
-    restart: no
-    volumes:
-      - netbird_data:/data
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "2"
-
   # Combined server (Management + Signal + Relay + STUN)
   netbird-server:
     <<: *netbird-server
@@ -194,6 +161,39 @@ services:
       prune-proxy-peers:
         condition: service_completed_successfully
         restart: true
+
+  # NetBird Provisioner - manages proxy registration and configuration
+  provisioner:
+    <<: *netbirdio-provisioner
+    container_name: netbird-provisioner
+    restart: no
+    environment:
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}
+      NB_PROXY_CROWDSEC_API_URL: http://crowdsec:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - provisioning-configs:/provisioning-configs
+    depends_on:
+      netbird-server:
+        condition: service_started
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+  # Prune Proxy Peers - cleans up unused proxy peers from the network
+  prune-proxy-peers:
+    <<: *netbirdio-prune-proxy-peers
+    container_name: netbird-prune-proxy-peers
+    restart: no
+    volumes:
+      - netbird_data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
 
   # NetBird Proxy - exposes internal resources to the internet
   proxy:
