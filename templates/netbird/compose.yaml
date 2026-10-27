@@ -193,6 +193,7 @@ services:
     depends_on:
       prune-proxy-peers:
         condition: service_completed_successfully
+        restart: true
 
   # NetBird Proxy - exposes internal resources to the internet
   proxy:
@@ -209,6 +210,7 @@ services:
         condition: service_healthy
       provisioner:
         condition: service_completed_successfully
+        restart: true
     environment:
       # NetBird Proxy Configuration
       NB_PROXY_DEBUG_LOGS: ${NB_PROXY_DEBUG_LOGS:-false}
