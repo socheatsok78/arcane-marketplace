@@ -1,0 +1,21 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/netbird.svg
+  urls:
+    - https://netbird.io/
+    - https://github.com/netbirdio/netbird
+
+services:
+  netbird-client:
+    image: netbirdio/netbird:latest
+    container_name: netbird-client-${NB_HOSTNAME:?required}
+    hostname: ${NB_HOSTNAME:?required}
+    cap_add:
+      - NET_ADMIN
+    network_mode: host
+    environment:
+      NB_SETUP_KEY: ${NB_SETUP_KEY:?required}
+      NB_MANAGEMENT_URL: ${NB_MANAGEMENT_URL:-https://api.netbird.io}
+    volumes:
+      - netbird-client:/var/lib/netbird
+volumes:
+  netbird-client:
