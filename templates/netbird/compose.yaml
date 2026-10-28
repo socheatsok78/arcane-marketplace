@@ -5,7 +5,7 @@ x-arcane:
     - https://github.com/netbirdio/netbird
 
 x-traefik: &traefik
-  image: traefik:v3.6
+  image: traefik:v3.7
 
 x-dashboard: &dashboard
   image: netbirdio/dashboard:latest
@@ -25,7 +25,7 @@ x-proxy: &proxy
   image: ghcr.io/socheatsok78/netbirdio-reverse-proxy:latest
 
 x-crowdsec: &crowdsec
-  image: crowdsecurity/crowdsec:v1.7.7
+  image: crowdsecurity/crowdsec:v1.8.1
 
 services:
   # Traefik reverse proxy (automatic TLS via Let's Encrypt)
@@ -43,11 +43,13 @@ services:
       # Docker provider
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}_netbird"
+      - "--providers.docker.network=${COMPOSE_PROJECT_NAME:-}_netbird"
       # Entrypoints
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.websecure.allowACMEByPass=true"
+      - "--entrypoints.web.http.aliasHeadersStrategy=delete"
+      - "--entrypoints.websecure.http.aliasHeadersStrategy=delete"
       # Disable timeouts for long-lived gRPC streams
       - "--entrypoints.websecure.transport.respondingTimeouts.readTimeout=0"
       - "--entrypoints.websecure.transport.respondingTimeouts.writeTimeout=0"
