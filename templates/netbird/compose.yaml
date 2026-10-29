@@ -104,7 +104,8 @@ services:
       NGINX_SSL_PORT: 443
       # Letsencrypt
       LETSENCRYPT_DOMAIN: none
-
+      # Agent Network
+      NETBIRD_AGENT_NETWORK_ENABLED: "${NETBIRD_AGENT_NETWORK_ENABLED:-false}"
     labels:
       - traefik.enable=true
       - traefik.http.routers.netbird-dashboard.rule=Host(`${NB_PROXY_DOMAIN:?required}`)
