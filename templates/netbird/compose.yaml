@@ -127,6 +127,8 @@ services:
     container_name: netbird-server
     restart: unless-stopped
     networks: [netbird]
+    environment:
+      NB_MCP_ENABLED: "${NB_MCP_ENABLED:-false}"
     ports:
       - '3478:3478/udp'
     volumes:
