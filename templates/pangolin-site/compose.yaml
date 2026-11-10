@@ -1,0 +1,16 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/pangolin.svg
+  urls:
+    - https://pangolin.net/
+    - https://github.com/fosrl/pangolin
+
+services:
+  pangolin-site:
+    image: fosrl/pangolin-cli
+    container_name: pangolin-site
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=${PANGOLIN_ENDPOINT:-https://pangolin.fossorial.io}
+      - SITE_ID=${SITE_ID:?Site ID}
+      - SITE_SECRET=${SITE_SECRET:?Site Secret}
+      - DISABLE_CLIENTS=${DISABLE_CLIENTS:-false}

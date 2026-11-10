@@ -1,0 +1,11 @@
+{
+    "name": "Termix with guacd",
+    "description": "Self-hosted server management, from SSH and remote desktop to automations",
+    "version": "1.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/termix.svg",
+    "tags": [
+        "management",
+        "ssh"
+    ]
+}

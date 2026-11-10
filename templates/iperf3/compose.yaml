@@ -1,0 +1,18 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/myspeed.png
+
+# !!! DISCLAIMER !!!
+# This service provides a shell environment with access to the Docker CLI.
+# Use with caution as it grants full access to the Docker daemon.
+
+services:
+  iperf3:
+    image: networkstatic/iperf3
+    command: -s
+    container_name: ${COMPOSE_PROJECT_NAME}-iperf3
+    restart: unless-stopped
+    ports:
+      - ${IPERF3_PORT:-5201}:5201
+networks:
+  default:
+    driver: bridge

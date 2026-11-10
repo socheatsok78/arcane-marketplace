@@ -1,0 +1,11 @@
+{
+    "name": "Technitium DNS Server",
+    "description": "Self host a DNS server for privacy & security",
+    "version": "1.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/technitium.svg",
+    "tags": [
+        "dns",
+        "networking"
+    ]
+}

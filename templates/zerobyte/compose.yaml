@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/zerobyte.svg
+  urls:
+    - https://zerobyte.app
+    - https://github.com/nicotsx/zerobyte
+
+services:
+  zerobyte:
+    cap_add:
+      - SYS_ADMIN
+    image: ghcr.io/nicotsx/zerobyte:v0.43
+    container_name: zerobyte
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ:-UTC} # Set your timezone here
+      - BASE_URL=${BASE_URL:-http://localhost:${COMPOSE_SERVICE_PORT:-4096}} # URL you will use to access Zerobyte
+      - APP_SECRET=${APP_SECRET:?required} # openssl rand -hex 32
+    ports:
+      - "${COMPOSE_SERVICE_PORT:-4096}:4096"
+    devices:
+      - /dev/fuse:/dev/fuse
+    volumes:
+      - zerobyte:/var/lib/zerobyte
+volumes:
+  zerobyte:

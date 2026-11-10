@@ -1,0 +1,1 @@
+import{rt as e}from"./DZFFExDE.js";var t=e({morphId:null,animateCards:!0,openedFromList:!1});export{t};

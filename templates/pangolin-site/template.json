@@ -1,0 +1,12 @@
+{
+    "name": "Pangolin Site",
+    "description": "Pangolin Site for Arcane",
+    "version": "1.0.0",
+    "author": "socheatsok78",
+    "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/pangolin.svg",
+    "tags": [
+        "edge",
+        "pangolin",
+        "networking"
+    ]
+}
